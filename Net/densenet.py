@@ -4,7 +4,7 @@ from tensorflow.contrib import slim, layers
 
 class FConvDenseNet():
     def __init__(self,
-                 input_shape=(None, 512, 512, 3),
+                 input_shape=(None, 400, 400, 3),
                  n_classes=11,
                  n_filters_first_conv=48,
                  n_pool=5,

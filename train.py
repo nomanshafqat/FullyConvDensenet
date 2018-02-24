@@ -4,12 +4,16 @@ from  Net.densenet import FConvDenseNet
 import tensorflow as tf
 from Net.loss import loss_func
 
+
 def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
+
+    input_img_size=416
+
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu)
     session_config = tf.ConfigProto(allow_soft_placement=True, gpu_options=gpu_options)
 
-    batch_plc = tf.placeholder(tf.float32, [None, 512, 512, 3])
-    gt_plc = tf.placeholder(tf.int32, [None, 512, 512])
+    batch_plc = tf.placeholder(tf.float32, [None, input_img_size, input_img_size, 3])
+    gt_plc = tf.placeholder(tf.int32, [None, input_img_size, input_img_size])
 
     densenet = FConvDenseNet(n_classes=2,n_pool=5,growth_rate=12,n_layers_per_block=(4,4,4,4,4,4,4,4,4,4,4,4,4))
 
@@ -36,8 +40,8 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
             start = load
         while True:
 
-            img = np.ones((batchsize, 512, 512, 3), dtype=np.float32)
-            labels = np.ones((batchsize, 512, 512), dtype=np.int32)
+            img = np.ones((batchsize, input_img_size, input_img_size, 3), dtype=np.float32)
+            labels = np.ones((batchsize, input_img_size, input_img_size), dtype=np.int32)
 
             _, loss = sess.run([train_step, loss_op], feed_dict={batch_plc: img,
                                                                  gt_plc: labels,
