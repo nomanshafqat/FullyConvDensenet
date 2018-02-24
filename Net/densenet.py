@@ -4,7 +4,7 @@ from tensorflow.contrib import slim, layers
 
 class FConvDenseNet():
     def __init__(self,
-                 input_shape=(None, 400, 400, 3),
+                 input_shape=(None, 416, 416, 3),
                  n_classes=11,
                  n_filters_first_conv=48,
                  n_pool=5,
@@ -128,10 +128,9 @@ class FConvDenseNet():
 
             batchnorm = tf.layers.batch_normalization(stack)
 
-            conv = slim.conv2d(inputs=batchnorm, num_outputs=n_filters, kernel_size=1, padding='SAME',
+            logits = slim.conv2d(inputs=batchnorm, num_outputs=n_filters, kernel_size=1, padding='SAME',
                                weights_initializer=self.initializer, biases_initializer=self.initializer_b,
                                activation_fn=None)
-            logits = slim.dropout(conv, keep_prob=self.dropout_p)
             print("logits=", logits.get_shape())
 
         with tf.variable_scope("softmax"):
