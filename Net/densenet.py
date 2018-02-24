@@ -140,12 +140,10 @@ class FConvDenseNet():
 
         p = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
         #print(p)
-        for a in p:
-            #print(a.name)
-            tf.summary.histogram(a.name, tf.Graph.get_tensor_by_name(tf.get_default_graph(), a.name))
-            # b=tf.summary(a.name,a.shape)
-            # tf.summary.histogram(a.name,b)
-            #print(a)
+        for i,a in enumerate(p):
+            if(i%8)==3:
+                print(i)
+                tf.summary.histogram(a.name, tf.Graph.get_tensor_by_name(tf.get_default_graph(), a.name))
 
         # tf.summary.histogram("bias", kernel)
 
