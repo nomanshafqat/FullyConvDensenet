@@ -11,7 +11,7 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
     batch_plc = tf.placeholder(tf.float32, [None, 512, 512, 3])
     gt_plc = tf.placeholder(tf.int32, [None, 512, 512])
 
-    densenet = FConvDenseNet(n_classes=2,n_pool=5,growth_rate=16)
+    densenet = FConvDenseNet(n_classes=2,n_pool=5,growth_rate=12,n_layers_per_block=(5,5,5,5,5,5,5,5,5,5,5,5,5))
 
     logits, softmax = densenet.inference(batch_plc)
 
@@ -62,4 +62,4 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
 
 
 if __name__ == '__main__':
-    train(-1,"ckpt",0.5,0.01,1000,2,"s","s")
+    train(-1,"ckpt",0.5,0.01,1000,1,"s","s")

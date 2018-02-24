@@ -79,6 +79,7 @@ class FConvDenseNet():
 
         pool_heads = []
         for i in range(self.n_pool + 1):
+            print("Dense Block ", i+1)
             with tf.variable_scope("block" + str(i + 1)):
                 for j in range(self.n_layers_per_block[i]):
                     with tf.variable_scope("layer" + str(j + 1)):
@@ -104,6 +105,8 @@ class FConvDenseNet():
         print("Turning up:", stack.get_shape())
 
         for i in range(self.n_pool):
+            print("Dense Block ", i+self.n_pool+1)
+
             with tf.variable_scope("Upsample" + str(i + 1)):
 
                 concat = pool_heads[len(pool_heads) - i - 2]
