@@ -8,7 +8,7 @@ class FConvDenseNet():
                  n_classes=11,
                  n_filters_first_conv=48,
                  n_pool=5,
-                 growth_rate=16,
+                 growth_rate=12,
                  n_layers_per_block=(4, 5, 7, 10, 12, 15, 12, 10, 7, 5, 4),
                  dropout_p=0.2):
 
