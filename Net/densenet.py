@@ -56,7 +56,7 @@ class FConvDenseNet():
         self.padding = 'SAME'
         # initializer = tf.truncated_normal_initializer(stddev=0.01)
         self.initializer = layers.xavier_initializer_conv2d()
-        self.initializer_b = tf.initializers.constant(0.1)
+        self.initializer_b = layers.xavier_initializer()
         self.regularizer = slim.l2_regularizer(0.0005)
         self.activation = slim.layers.nn.leaky_relu
 
