@@ -59,6 +59,7 @@ class FConvDenseNet():
         self.initializer_b = layers.xavier_initializer()
         self.regularizer = slim.l2_regularizer(0.0005)
         self.activation = slim.layers.nn.leaky_relu
+        self.activation = slim.layers.nn.relu
 
         print(self.n_filters_first_conv)
         with tf.variable_scope("first-conv"):
@@ -135,7 +136,7 @@ class FConvDenseNet():
             print(pred.get_shape())
 
         p = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-        print(p)
+        #print(p)
         for a in p:
             #print(a.name)
             tf.summary.histogram(a.name, tf.Graph.get_tensor_by_name(tf.get_default_graph(), a.name))

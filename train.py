@@ -62,4 +62,4 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
 
 
 if __name__ == '__main__':
-    train(-1,"ckpt",0.1,0.01,1000,2,"s","s")
+    train(-1,"ckpt",0.5,0.01,1000,2,"s","s")
