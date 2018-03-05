@@ -1,3 +1,8 @@
+from scipy.ndimage import rotate
+import os,glob
+import numpy as np
+import cv2
+
 class Data_handler:
     def __init__(self,data_location,ground_truth):
         os.chdir(data_location)
@@ -20,25 +25,26 @@ class Data_handler:
     def get_batch(self,batch_size ,train=True):
         final_images=np.zeros((batch_size,414,414,6))
         final_GT=np.zeros((batch_size,414,414))
-        for i in range(batch_size):
-            print i
+        for i in range(batch_size): 
             image_path=self.data_path+self.images[self.current_location]
             image=cv2.imread(image_path)
             
             gt_path=self.labels_path+self.GTs[self.current_location]
              
-            GT=cv2.imread(gt_path)
+            GT=cv2.imread(gt_path) 
             image_six_chl=np.zeros((414,414,6))
-            GT_one_chl=np.zeros((GT.shape[0],GT.shape[1]))
-            print i+1
+            GT_one_chl=np.zeros((GT.shape[0],GT.shape[1])) 
             GT_one_chl[GT[:,:,1]<27]=1
-            GT_one_chl[(GT[:,:,1]>127)*(GT[:,:,2]>127)]=2
-            print i+1
+            GT_one_chl[(GT[:,:,1]>127)*(GT[:,:,2]>127)]=2 
             
             if train:
                 CLAHE_contrast_range=(1,11)
                 image_crop_range=(500,800)
                 CLAHE_contrast__window_range=(8,40)
+		rot_angle=[0,90,180,270]
+		
+		angle=rot_angle[np.random.randint(0,4)]
+
                 
                 resize_number=np.random.randint(image_crop_range[0],image_crop_range[1])
                 if(np.random.randint(0,100)%3==0):
@@ -59,6 +65,8 @@ class Data_handler:
                 contrast_factor=np.random.randint(CLAHE_contrast_range[0],CLAHE_contrast_range[1])
                 
                 clahe = cv2.createCLAHE(clipLimit=contrast_factor, tileGridSize=(window_size,window_size))
+		image=rotate(image,angle)
+		GT_one_chl=rotate(GT_one_chl,angle)
                 b,g,r=image[:,:,0],image[:,:,1],image[:,:,2]
                 
                 cl1 = clahe.apply(b)
@@ -94,5 +102,6 @@ class Data_handler:
                 self.current_location=0
             
         return [final_images,final_GT]
-            
+
+ 
     
