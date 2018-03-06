@@ -6,19 +6,25 @@ import cv2
 
 class Data_handler:
     def __init__(self,
-                 data_location="",
-                 ground_truth=""):
-        #os.chdir(data_location)
+                 data_location,
+                 ground_truth):
+        # os.chdir(data_location)
         self.images = []
         self.GTs = []
         self.data_path = data_location
         self.labels_path = ground_truth
+
         for root, dirs, files in os.walk(data_location):
             for file in files:
-                if file.endswith((".JPG", ".png", ".tif")):  # The arg can be a tuple of suffixes to look for
+                if file.endswith((".png", ".tif")):  # The arg can be a tuple of suffixes to look for
 
                     self.images.append(file)
                     gt_name = file.split(".")[0][:] + "_L.png"
+                    self.GTs.append(gt_name)
+
+                if file.endswith((".JPG")):  # The arg can be a tuple of suffixes to look for
+                    self.images.append(file)
+                    gt_name = file.split(".")[0][:-2] + "_L.png"
                     self.GTs.append(gt_name)
 
         self.data_length = len(self.images)
