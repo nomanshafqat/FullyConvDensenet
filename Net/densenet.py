@@ -82,11 +82,11 @@ class FConvDenseNet():
                 for j in range(self.n_layers_per_block[i]):
                     with tf.variable_scope("layer" + str(j + 1)):
 
-                        with tf.variable_scope("1x1conv"):
-                            conv=self.conv(stack,self.growth_rate*4,kernel_size=1)
+                        #with tf.variable_scope("1x1conv"):
+                            #conv=self.conv(stack,self.growth_rate*4,kernel_size=1)
 
                         with tf.variable_scope("3x3conv"):
-                            conv = self.conv(conv, self.growth_rate,kernel_size=3)
+                            conv = self.conv(stack, self.growth_rate,kernel_size=3)
 
                     stack = tf.concat([stack, conv], axis=-1)
 
@@ -120,10 +120,10 @@ class FConvDenseNet():
                 for j in range(self.n_layers_per_block[self.n_pool + i + 1]):
                     with tf.variable_scope("layer" + str(j + 1)):
 
-                        with tf.variable_scope("1x1conv" + str(j + 1)):
-                            conv=self.conv(stack,self.growth_rate*4,kernel_size=1)
+                        #with tf.variable_scope("1x1conv" + str(j + 1)):
+                            #conv=self.conv(stack,self.growth_rate*4,kernel_size=1)
                         with tf.variable_scope("3x3conv" + str(j + 1)):
-                            conv = self.conv(conv, self.growth_rate)
+                            conv = self.conv(stack, self.growth_rate)
 
                     stack = tf.concat([stack, conv], axis=-1)
                     print(stack.get_shape())
