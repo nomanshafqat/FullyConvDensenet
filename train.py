@@ -46,7 +46,7 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
 
             #img = np.ones((batchsize, input_img_size, input_img_size, 3), dtype=np.float32)
             #labels = np.ones((batchsize, input_img_size, input_img_size), dtype=np.int32)
-            img,labels=dataHandler.get_batch(batch_size=batchsize)
+            img,labels=dataHandler.get_batch(batch_size=batchsize,train=True)
             #print(labels)
             _, loss = sess.run([train_step, loss_op], feed_dict={batch_plc: img,
                                                                  gt_plc: labels,
@@ -58,6 +58,7 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
                                                       gt_plc: labels,
                                                       })
                 writer.add_summary(s, start)
+
                 print("writing summary")
 
             print("Step <", start, "> loss => ", loss)
@@ -65,7 +66,7 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
             if start % ckpt_steps == 0 and start != ckpt_steps:
                 print("saving checkpoint ", str(start), ".ckpt.....")
 
-                #save_path = saver.save(sess, os.path.join(ckpt_dir, str(start)))
+                save_path = saver.save(sess, os.path.join(ckpt_dir, str(start)))
 
             start += 1
 
