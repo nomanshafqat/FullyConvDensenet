@@ -64,28 +64,27 @@ class Datahandler_COCO():
         list = self.image_ids
         #print(self.image_ids)
 
+        while True:
+            for id in list:
+                #print(id)
+                filename=self.coco.imgs[id]["file_name"]
+                path=os.path.join(self.image_dir,filename)
+                print(path)
+                img=cv2.imread(path)
+                mask=self.get_mask(id)
+                img=cv2.resize(img,(224,224))
+                mask=cv2.resize(mask,(224,224))
 
+                batch_images.append(img)
+                batch_masks.append(mask)
 
-        for id in list:
-            #print(id)
-            filename=self.coco.imgs[id]["file_name"]
-            path=os.path.join(self.image_dir,filename)
-            print(path)
-            img=cv2.imread(path)
-            mask=self.get_mask(id)
-            img=cv2.resize(img,(224,224))
-            mask=cv2.resize(mask,(224,224))
+                #cv2.imwrite(filename+"gt.jpg",img)
+                #cv2.imwrite(filename+"b.jpg",mask*255)
+                if len(batch_images) == batchsize:
 
-            batch_images.append(img)
-            batch_masks.append(mask)
-
-            #cv2.imwrite(filename+"gt.jpg",img)
-            #cv2.imwrite(filename+"b.jpg",mask*255)
-            if len(batch_images) == batchsize:
-
-                yield (np.array(batch_images), np.expand_dims(np.array(batch_masks),axis=-1))
-                batch_images = []
-                batch_masks = []
+                    yield (np.array(batch_images), np.expand_dims(np.array(batch_masks),axis=-1))
+                    batch_images = []
+                    batch_masks = []
 
     def get_batch(self,batch_size=1, train=True):
         a=next(self.make_batches(batch_size,train))
