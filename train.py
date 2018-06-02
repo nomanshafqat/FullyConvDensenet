@@ -62,7 +62,7 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
                                                                  gt_plc: labels,
                                                                  })
 
-            if start % 3 == 0:
+            if start % 500 == 0:
 
                 s = sess.run(mergedsummary, feed_dict={batch_plc: img,
                                                       gt_plc: labels,

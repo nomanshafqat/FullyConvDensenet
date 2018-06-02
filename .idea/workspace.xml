@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53f8fd27-6dc7-478f-a02a-1f2cfc6310b7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataHandler/Data_handler.py" afterPath="$PROJECT_DIR$/DataHandler/Data_handler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train.py" afterPath="$PROJECT_DIR$/train.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,12 +16,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="53" lean-forward="false" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="53" />
-              <folding />
+            <state relative-caret-position="319">
+              <caret line="64" column="26" lean-forward="false" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -30,8 +31,8 @@
       <file leaf-file-name="densenet.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Net/densenet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="81" column="16" lean-forward="false" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
+            <state relative-caret-position="620">
+              <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -69,7 +70,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Data_handler.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Data_handler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataHandler/Data_handler.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1378">
@@ -123,8 +124,8 @@
         <option value="$PROJECT_DIR$/DataHandler/Augmentation.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/Net/densenet.py" />
-        <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/DataHandler/Data_handler.py" />
+        <option value="$PROJECT_DIR$/train.py" />
       </list>
     </option>
   </component>
@@ -545,14 +546,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Net/densenet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="81" column="16" lean-forward="false" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataHandler/Augmentation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="962">
@@ -585,19 +578,29 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="53" lean-forward="false" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataHandler/Data_handler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1378">
           <caret line="92" column="17" lean-forward="false" selection-start-line="92" selection-start-column="17" selection-end-line="92" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Net/densenet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="64" column="26" lean-forward="false" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
