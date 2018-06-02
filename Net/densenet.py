@@ -147,6 +147,9 @@ class FConvDenseNet():
             if(i%8)==3:
                 #print(i)
                 tf.summary.histogram(a.name, tf.Graph.get_tensor_by_name(tf.get_default_graph(), a.name))
+        pred=tf.expand_dims(pred, axis=-1)
+        print("pred==", pred.get_shape())
+        tf.summary.image("pred",tf.multiply(tf.constant(255,dtype=tf.uint8),tf.cast(pred,tf.uint8)))
 
         # tf.summary.histogram("bias", kernel)
 

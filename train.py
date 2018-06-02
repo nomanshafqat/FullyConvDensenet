@@ -10,6 +10,7 @@ from DataHandler.Augmentation import augment
 
 def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
     dataHandler= Datahandler_COCO(imgdir,groundtruth)
+    data_generator=dataHandler.make_batches(batchsize)
     #img, labels = dataHandler.get_batch(batch_size=batchsize)
 
     #dataHandler= Data_handler(data_location=imgdir, ground_truth=groundtruth)
@@ -26,7 +27,7 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
     batch_plc_aug, gt_plc_aug = augment(batch_plc, gt_plc,
                              horizontal_flip=True, rotate=15, crop_probability=0.8, mixup=4)
 
-    densenet = FConvDenseNet(n_classes=2,n_pool=5,growth_rate=16)
+    densenet = FConvDenseNet(n_classes=1,n_pool=5,growth_rate=16)
 
     logits, softmax = densenet.inference(batch_plc_aug)
 
@@ -53,13 +54,14 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
 
             #img = np.ones((batchsize, input_img_size, input_img_size, 3), dtype=np.float32)
             #labels = np.ones((batchsize, input_img_size, input_img_size), dtype=np.int32)
-            img,labels=dataHandler.get_batch(batch_size=batchsize,train=True)
+
+            img,labels=next(data_generator)
             #print(labels)
             _, loss = sess.run([train_step, loss_op], feed_dict={batch_plc: img,
                                                                  gt_plc: labels,
                                                                  })
 
-            if start % 50 == 0:
+            if start % 3 == 0:
 
                 s = sess.run(mergedsummary, feed_dict={batch_plc: img,
                                                       gt_plc: labels,
@@ -69,6 +71,7 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
                 print("writing summary")
 
             print("Step <", start, "> loss => ", loss)
+            start += 1
 
             if start % ckpt_steps == 0 and start != ckpt_steps:
                 print("saving checkpoint ", str(start), ".ckpt.....")
@@ -76,7 +79,6 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
                 save_path = saver.save(sess, os.path.join(ckpt_dir, str(start)))
 
 
-            start += 1
 
 
 import sys

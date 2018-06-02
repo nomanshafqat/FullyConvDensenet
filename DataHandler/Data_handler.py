@@ -60,33 +60,36 @@ class Datahandler_COCO():
     def make_batches(self,batchsize=4,Train=True):
         batch_images = []
         batch_masks = []
-        while True:
-            print("loop")
-            list=self.image_ids
-            for id in list:
-                filename=self.coco.imgs[id]["file_name"]
-                path=os.path.join(self.image_dir,filename)
-                print(path)
-                img=cv2.imread(path)
-                mask=self.get_mask(id)
-                img=cv2.resize(img,(224,224))
-                mask=cv2.resize(mask,(224,224))
+        list = self.image_ids
+        #print(self.image_ids)
 
-                batch_images.append(img)
-                batch_masks.append(mask)
 
-                #cv2.imwrite(filename+"gt.jpg",img)
-                #cv2.imwrite(filename+"b.jpg",mask*255)
-                if len(batch_images) == batchsize:
 
-                    yield batch_images, batch_masks
-                    batch_images = []
-                    batch_masks = []
+        for id in list:
+            #print(id)
+            filename=self.coco.imgs[id]["file_name"]
+            path=os.path.join(self.image_dir,filename)
+            print(path)
+            img=cv2.imread(path)
+            mask=self.get_mask(id)
+            img=cv2.resize(img,(224,224))
+            mask=cv2.resize(mask,(224,224))
+
+            batch_images.append(img)
+            batch_masks.append(mask)
+
+            #cv2.imwrite(filename+"gt.jpg",img)
+            #cv2.imwrite(filename+"b.jpg",mask*255)
+            if len(batch_images) == batchsize:
+
+                yield (np.array(batch_images), np.expand_dims(np.array(batch_masks),axis=-1))
+                batch_images = []
+                batch_masks = []
 
     def get_batch(self,batch_size=1, train=True):
-        a=self.make_batches(batch_size,train)
-        for c, b in a:
-            #print(b)
+        a=next(self.make_batches(batch_size,train))
+        for b in a:
+            print(b)
             return np.array(c),np.expand_dims(np.array(b),axis=-1)
 
         #self.coco.
