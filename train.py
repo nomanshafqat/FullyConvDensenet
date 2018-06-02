@@ -3,27 +3,34 @@ import os
 import numpy as np
 import tensorflow as tf
 
-from DataHandler.Data_handler import Data_handler
+from DataHandler.Data_handler import Data_handler,Datahandler_COCO
 from  Net.densenet import FConvDenseNet
 from Net.loss import loss_func
-
+from DataHandler.Augmentation import augment
 
 def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
-    dataHandler= Data_handler(data_location=imgdir, ground_truth=groundtruth)
-    img, labels = dataHandler.get_batch(batch_size=batchsize)
+    dataHandler= Datahandler_COCO(imgdir,groundtruth)
+    #img, labels = dataHandler.get_batch(batch_size=batchsize)
 
-    input_img_size=416
+    #dataHandler= Data_handler(data_location=imgdir, ground_truth=groundtruth)
+    #img, labels = dataHandler.get_batch(batch_size=batchsize)
+
+    input_img_size=224
 
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu)
     session_config = tf.ConfigProto(allow_soft_placement=True, gpu_options=gpu_options)
 
-    batch_plc = tf.placeholder(tf.float32, [None, input_img_size, input_img_size, 6])
-    gt_plc = tf.placeholder(tf.int32, [None, input_img_size, input_img_size])
+    batch_plc = tf.placeholder(tf.float32, [None, input_img_size, input_img_size, 3])
+    gt_plc = tf.placeholder(tf.int32, [None, input_img_size, input_img_size,1])
+
+    batch_plc_aug, gt_plc_aug = augment(batch_plc, gt_plc,
+                             horizontal_flip=True, rotate=15, crop_probability=0.8, mixup=4)
+
     densenet = FConvDenseNet(n_classes=2,n_pool=5,growth_rate=16)
 
-    logits, softmax = densenet.inference(batch_plc)
+    logits, softmax = densenet.inference(batch_plc_aug)
 
-    loss_op = loss_func(logits, gt_plc)
+    loss_op = loss_func(logits, gt_plc_aug)
     optimizer = tf.train.AdamOptimizer(lr)
     train_step = optimizer.minimize(loss_op)
 
@@ -67,6 +74,7 @@ def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
                 print("saving checkpoint ", str(start), ".ckpt.....")
 
                 save_path = saver.save(sess, os.path.join(ckpt_dir, str(start)))
+
 
             start += 1
 

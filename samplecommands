@@ -3,4 +3,12 @@
 python train.py -1 ckpt 0.25 1e-4 4000 1 /Users/nomanshafqat/Desktop/Retina/266/images/ /Users/nomanshafqat/Desktop/Retina/266/labels/
 
 
-python train.py -1 /home2/noman/FCDckpt 0.66 1e-4 4000 1 /home2/noman/Retina/266/images/ /home2/noman/266/labels/
+python train.py -1 /home2/noman/FCDckpt 0.66 1e-4 4000 1 /home2/noman/Retina/266/images/ /home2/noman/Retina/266/labels/
+
+
+
+python train.py -1 /home2/noman/FCDckpt 0.66 1e-4 4000 1 /home2/noman/Retina/266/images/ /home2/noman/Retina/266/labels/
+
+python test.py 1196000 /Users/nomanshafqat/Desktop/ckpts  0.25 1e-4 4000 1 /Users/nomanshafqat/Desktop/Retina/65/images/ /Users/nomanshafqat/Desktop/Retina/65/labels/
+
+
