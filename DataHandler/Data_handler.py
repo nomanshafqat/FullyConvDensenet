@@ -28,6 +28,7 @@ class Datahandler_COCO():
 
         self.annotation_file=annotation_file
         self.image_dir = image_dir
+        print("loading dataset")
 
         dataset = json.load(open(self.annotation_file, 'r'))
 
@@ -90,7 +91,7 @@ class Datahandler_COCO():
         a=next(self.make_batches(batch_size,train))
         for b in a:
             print(b)
-            return np.array(c),np.expand_dims(np.array(b),axis=-1)
+            return np.array(b),np.expand_dims(np.array(b),axis=-1)
 
         #self.coco.
         # register classes

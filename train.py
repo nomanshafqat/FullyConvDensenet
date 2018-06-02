@@ -3,12 +3,13 @@ import os
 import numpy as np
 import tensorflow as tf
 
-from DataHandler.Data_handler import Data_handler,Datahandler_COCO
-from  Net.densenet import FConvDenseNet
+from DataHandler.Data_handler import Datahandler_COCO
+from Net.densenet import FConvDenseNet
 from Net.loss import loss_func
 from DataHandler.Augmentation import augment
 
 def train(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
+    print("start")
     dataHandler= Datahandler_COCO(imgdir,groundtruth)
     data_generator=dataHandler.make_batches(batchsize)
     #img, labels = dataHandler.get_batch(batch_size=batchsize)
