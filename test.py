@@ -2,24 +2,25 @@ import os
 
 import numpy as np
 import tensorflow as tf
-
-from DataHandler.Data_handler import Data_handler
-from  Net.densenet import FConvDenseNet
-from Net.loss import loss_func
 import cv2
+from DataHandler.Data_handler import Datahandler_COCO
+from Net.densenet import FConvDenseNet
+from Net.loss import loss_func
+from DataHandler.Augmentation import augment
+
 
 def test(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
-    dataHandler= Data_handler(data_location=imgdir, ground_truth=groundtruth)
-    img, labels = dataHandler.get_batch(batch_size=batchsize)
-
-    input_img_size=214
+    input_img_size = 224
 
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu)
     session_config = tf.ConfigProto(allow_soft_placement=True, gpu_options=gpu_options)
 
-    batch_plc = tf.placeholder(tf.float32, [None, input_img_size, input_img_size, 6])
-    gt_plc = tf.placeholder(tf.int32, [None, input_img_size, input_img_size])
-    densenet = FConvDenseNet(n_classes=2,n_pool=5,growth_rate=16)
+    batch_plc = tf.placeholder(tf.float32, [None, input_img_size, input_img_size, 3])
+    gt_plc = tf.placeholder(tf.int32, [None, input_img_size, input_img_size, 1])
+
+
+
+    densenet = FConvDenseNet(n_classes=1, n_pool=5, growth_rate=16)
 
     logits, softmax = densenet.inference(batch_plc)
 
@@ -37,20 +38,25 @@ def test(load, ckpt_dir, gpu, lr, ckpt_steps, batchsize, imgdir, groundtruth):
             print("Restoring", load, ".ckpt.....")
             saver.restore(sess, os.path.join(ckpt_dir, str(load)))
             start = load
-        while True:
+        images=os.listdir(imgdir)
+        for image in images:
+            print(image)
+            image=cv2.imread(os.path.join(imgdir,image))
+
+            image=cv2.resize(image,(224,224))
+            image=np.expand_dims(np.array(image),axis=0)
 
             #img = np.ones((batchsize, input_img_size, input_img_size, 3), dtype=np.float32)
             #labels = np.ones((batchsize, input_img_size, input_img_size), dtype=np.int32)
-            img,labels=dataHandler.get_batch(batch_size=batchsize,train=True)
             #print(labels)
-            results = sess.run(softmax, feed_dict={batch_plc: img,
-                                                                 gt_plc: labels,
+            results = sess.run(softmax, feed_dict={batch_plc: image,
+
                                                                  })
             print(results.shape)
             print(results[0].shape)
 
-            cv2.imwrite("results/"+str(start)+".jpg",results[0]*100)
-            cv2.imwrite("results/"+str(start)+"_gt.jpg",labels[0]*100)
+            cv2.imwrite("results/"+str(start)+"pred.jpg",results[0]*100)
+            cv2.imwrite("results/"+str(start)+".jpg",image[0])
 
 
             start += 1

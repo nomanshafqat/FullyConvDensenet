@@ -12,3 +12,4 @@ python train.py -1 /home2/noman/FCDckpt 0.66 1e-4 4000 1 /home2/noman/Retina/266
 python test.py 1196000 /Users/nomanshafqat/Desktop/ckpts  0.25 1e-4 4000 1 /Users/nomanshafqat/Desktop/Retina/65/images/ /Users/nomanshafqat/Desktop/Retina/65/labels/
 
 
+python test.py 120000 /Users/nomanshafqat/Desktop/ckpts/ckpts/  0.25 1e-4 400 1 /Users/nomanshafqat/Dropbox/MoreImages/train/  /Users/nomanshafqat/Desktop/

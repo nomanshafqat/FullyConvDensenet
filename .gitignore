@@ -1,6 +1,8 @@
 
-summary/events.out.tfevents.1519496567.Nomans-MBP
 *.Nomans-MBP
 .DS_Store
+*.jpg
+*pyc
+*xml
+.*
 .idea/workspace.xml
-Net/__pycache__/densenet.cpython-36.pyc
